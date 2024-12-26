@@ -2,11 +2,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Video {
-    public String titulo;
-    public String descricao;
-    public int duracao; // em minutos
-    public String categoria;
-    public Date dataPublicacao;
+    private String titulo;
+    private String descricao;
+    private int duracao; // em minutos
+    private String categoria;
+    private Date dataPublicacao;
 
     public Video(String titulo, String descricao, int duracao, String categoria, Date dataPublicacao) {
         this.titulo = titulo;
@@ -19,7 +19,7 @@ public class Video {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return titulo + ";" + descricao + ";" + duracao + ";" + categoria + ";" + sdf.format(dataPublicacao);
+        return "Título: " + titulo + ";Descrição: " + descricao + ";Duração: " + duracao + ";Categoria: " + categoria + ";Data: " + sdf.format(dataPublicacao);
     }
 
     public static Video fromString(String linha) {
