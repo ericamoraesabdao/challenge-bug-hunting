@@ -2,20 +2,20 @@ package main;
 
 import model.Video;
 import repository.FileVideoRepository;
-import service.VideoService;
+//import service.VideoService;
 import service.VideoServiceImpl;
 import strategy.SearchStrategy;
 import strategy.TitleSearchStrategy;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        VideoService videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
+        VideoServiceImpl videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
         SearchStrategy searchStrategy = new TitleSearchStrategy();
 
         while (true) {
@@ -29,13 +29,9 @@ public class Main {
             scanner.nextLine(); // Consumir a quebra de linha
 
             if (opcao == 1) {
-                Video video = null;
-                video.SaveVideo();
+                videoService.saveVideo();
             } else if (opcao == 2) {
-                List<Video> videos = videoService.listVideos();
-                for (Video video : videos) {
-                    System.out.println(video);
-                }
+                videoService.listingVideos();
             } else if (opcao == 3) {
                 System.out.print("Digite o título para busca: ");
                 String query = scanner.nextLine();
