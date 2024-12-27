@@ -1,22 +1,16 @@
 package main;
 
-import model.Video;
+import model.FileHandler;
+import model.VideoManager;
 import repository.FileVideoRepository;
-//import service.VideoService;
-import service.VideoServiceImpl;
-import strategy.SearchStrategy;
-import strategy.TitleSearchStrategy;
 
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        VideoServiceImpl videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
-        SearchStrategy searchStrategy = new TitleSearchStrategy();
+        FileHandler videoService = new FileHandler(new FileVideoRepository("videos.txt"));
+        VideoManager videoManager = new VideoManager(new FileVideoRepository("videos.txt"));
 
         while (true) {
             System.out.println("\n=== Sistema de Gerenciamento de Vídeos ===");
@@ -33,20 +27,14 @@ public class Main {
             } else if (opcao == 2) {
                 videoService.listingVideos();
             } else if (opcao == 3) {
-                System.out.print("Digite o título para busca: ");
-                String query = scanner.nextLine();
-                List<Video> resultados = searchStrategy.search(videoService.listVideos(), query);
-                for (Video video : resultados) {
-                    System.out.println(video);
-                }
+                videoManager.buscaPorTitulo();
             } else if (opcao == 4) {
                 System.out.println("Saindo do sistema...");
                 break;
             } else {
-                System.out.println("Opção inválida.");
+                System.out.println("Opção inválida. Digite uma opção do menu!");
             }
         }
-
         scanner.close();
     }
 }
