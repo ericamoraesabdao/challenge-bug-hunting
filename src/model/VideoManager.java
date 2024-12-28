@@ -21,7 +21,7 @@ public class VideoManager extends VideoServiceImpl {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Digite o título para busca: ");
+        System.out.print("Digite o título do vídeo para pesquisa: ");
         String query = scanner.nextLine();
 
         List<Video> resultados = searchStrategy.search(videoService.listVideos(), query);

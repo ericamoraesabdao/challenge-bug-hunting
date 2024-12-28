@@ -18,18 +18,42 @@ public class FileHandler extends VideoServiceImpl {
     public void saveVideo() {
         Scanner scanner = new Scanner(System.in);
         VideoService videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
+        
+        String titulo = "";
+        while (titulo.isEmpty()){
+            System.out.print("Digite o título do vídeo: ");
+            titulo = scanner.nextLine();
+        }
+        String descricao = "";
+        while (descricao.isEmpty()){
+            System.out.print("Digite a descrição do vídeo: ");
+            descricao = scanner.nextLine();
+        }
+        int duracao = 0;
+        while ((duracao <= 0)){
+            System.out.print("Digite a duração do vídeo (em minutos): ");
+            duracao = scanner.nextInt();
+            scanner.nextLine();  // Consumir a quebra de linha
+        }
+        String categoria;
+        int choice = 0;
 
-        System.out.print("Digite o título do vídeo: ");
-        String titulo = scanner.nextLine();
-        System.out.print("Digite a descrição do vídeo: ");
-        String descricao = scanner.nextLine();
-        System.out.print("Digite a duração do vídeo (em minutos): ");
-        int duracao = scanner.nextInt();
-        scanner.nextLine(); // Consumir a quebra de linha
-        System.out.print("Digite a categoria do vídeo: ");
-        String categoria = scanner.nextLine();
-        System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
-        String dataStr = scanner.nextLine();
+            for (CategoryType category : CategoryType.values()) {
+            System.out.println(category.ordinal() + 1 + " - " + category.getCategory());
+            }
+        while (1 > choice || choice > CategoryType.values().length) {
+            System.out.print("Digite o número da categoria do vídeo: ");
+            choice = scanner.nextInt();
+        }
+            CategoryType selectCategory = CategoryType.values()[choice - 1];
+            categoria = String.valueOf(selectCategory);
+            scanner.nextLine();
+
+            String dataStr = "";
+            while (dataStr.isEmpty()){
+                System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
+                dataStr = scanner.nextLine();
+            }
 
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
