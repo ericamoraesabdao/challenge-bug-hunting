@@ -1,5 +1,6 @@
 package model;
 
+import Validations.Validations;
 import repository.FileVideoRepository;
 import repository.VideoRepository;
 import service.VideoService;
@@ -11,70 +12,44 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileHandler extends VideoServiceImpl {
+    private final VideoService videoService;
+
     public FileHandler(VideoRepository repository) {
         super(repository);
+        this.videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
     }
 
     public void saveVideo() {
-        Scanner scanner = new Scanner(System.in);
-        VideoService videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
-        
-        String titulo = "";
-        while (titulo.isEmpty()){
-            System.out.print("Digite o título do vídeo: ");
-            titulo = scanner.nextLine();
-        }
-        String descricao = "";
-        while (descricao.isEmpty()){
-            System.out.print("Digite a descrição do vídeo: ");
-            descricao = scanner.nextLine();
-        }
-        int duracao = 0;
-        while ((duracao <= 0)){
-            System.out.print("Digite a duração do vídeo (em minutos): ");
-            duracao = scanner.nextInt();
-            scanner.nextLine();  // Consumir a quebra de linha
-        }
-        String categoria;
-        int choice = 0;
-
-            for (CategoryType category : CategoryType.values()) {
-            System.out.println(category.ordinal() + 1 + " - " + category.getCategory());
-            }
-        while (1 > choice || choice > CategoryType.values().length) {
-            System.out.print("Digite o número da categoria do vídeo: ");
-            choice = scanner.nextInt();
-        }
-            CategoryType selectCategory = CategoryType.values()[choice - 1];
-            categoria = String.valueOf(selectCategory);
-            scanner.nextLine();
-
-            String dataStr = "";
-            while (dataStr.isEmpty()){
-                System.out.print("Digite a data de publicação (dd/MM/yyyy): ");
-                dataStr = scanner.nextLine();
-            }
-
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            Date dataPublicacao = sdf.parse(dataStr);
+            Scanner scanner = new Scanner(System.in);
+            String titulo = Validations.readNonEmptyString(scanner, "Digite o título do vídeo: ");
+            String descricao = Validations.readNonEmptyString(scanner, "Digite a descrição do vídeo: ");
+            int duracao = Validations.readPositiveInt(scanner, "Digite a duração do vídeo (em minutos): ");
+            String categoria = Validations.selectCategory(scanner);
+            Date dataPublicacao = Validations.readValidDate(scanner, "Digite a data de publicação (dd/MM/yyyy): ");
+
+            // Criação do vídeo e adição ao serviço
             Video video = new Video(titulo, descricao, duracao, categoria, dataPublicacao);
             videoService.addVideo(video);
             System.out.println("Vídeo adicionado com sucesso!");
         } catch (Exception e) {
-            System.out.println("Não foi possível adicionar o vídeo.");
+            System.out.println("Não foi possível adicionar o vídeo. Erro: " + e.getMessage());
         }
     }
 
     public void listingVideos(){
-        VideoService videoService = new VideoServiceImpl(new FileVideoRepository("videos.txt"));
         List<Video> videos = videoService.listVideos();
-
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         for (Video video : videos) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             System.out.println("Título: " + video.getTitulo() + ", Descrição: " + video.getDescricao() + ", Duração: " + video.getDuracao() + ", Categoria: " + video.getCategoria() + ", Data de publicação: " + sdf.format(video.getDataPublicacao()));
         }
     }
 
+    public void editVideo(){
+        System.out.println("produzindo");
+    }
 
+    public void deleteVideo(){
+        System.out.println("produzindo");
+    }
 }
