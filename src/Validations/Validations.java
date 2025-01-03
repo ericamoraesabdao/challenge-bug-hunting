@@ -8,11 +8,14 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Validations {
-    public static String readNonEmptyString(Scanner scanner, String prompt) {
-        String input = "";
-        while (input.isEmpty()) {
+    public static String readNonEmptyString(Scanner scanner, String prompt, String msg) {
+        String input = null;
+        while (input == null || input.trim().isEmpty()) {
             System.out.print(prompt);
             input = scanner.nextLine();
+            if (input.trim().isEmpty()) {
+                System.out.println(msg);
+            }
         }
         return input;
     }

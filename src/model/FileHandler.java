@@ -25,8 +25,8 @@ public class FileHandler extends VideoServiceImpl {
     public void saveVideo() {
         try {
             Scanner scanner = new Scanner(System.in);
-            String titulo = Validations.readNonEmptyString(scanner, "Digite o título do vídeo: ");
-            String descricao = Validations.readNonEmptyString(scanner, "Digite a descrição do vídeo: ");
+            String titulo = Validations.readNonEmptyString(scanner, "Digite o título do vídeo: ", "O título não pode ser nulo!");
+            String descricao = Validations.readNonEmptyString(scanner, "Digite a descrição do vídeo: ", "A descrição não pode ser nula!");
             int duracao = Validations.readPositiveInt(scanner, "Digite a duração do vídeo (em minutos): ");
             String categoria = Validations.selectCategory(scanner);
             Date dataPublicacao = Validations.readValidDate(scanner, "Digite a data de publicação (dd/MM/yyyy): ");
@@ -81,11 +81,11 @@ public class FileHandler extends VideoServiceImpl {
         try {
             switch (itemIndex) {
                 case 0 -> {
-                    String titulo = Validations.readNonEmptyString(scanner, "Digite o novo título do vídeo: ");
+                    String titulo = Validations.readNonEmptyString(scanner, "Digite o novo título do vídeo: ", "O título não pode ser nulo!");
                     newList.setTitulo(titulo);
                 }
                 case 1 -> {
-                    String descricao = Validations.readNonEmptyString(scanner, "Digite a nova descrição do vídeo: ");
+                    String descricao = Validations.readNonEmptyString(scanner, "Digite a nova descrição do vídeo: ", "A descrição não pode ser nulo!");
                     newList.setDescricao(descricao);
                 }
                 case 2 -> {
