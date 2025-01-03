@@ -7,7 +7,6 @@ import repository.FileVideoRepository;
 
 import java.util.Scanner;
 
-
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -27,13 +26,13 @@ public class Main {
             } else if (opcao == 2) {
                 videoService.listingVideos();
             } else if (opcao == 3) {
-                videoManager.buscaPorTitulo();
+                videoManager.searchByTitle();
             } else if (opcao == 4) {
                 videoService.editVideo();
             } else if (opcao == 5) {
                 videoService.deleteVideo();
             } else if (opcao == 6) {
-                System.out.println("Produzindo");
+                videoManager.searchByCategory();
             } else if (opcao == 7) {
                 System.out.println("Produzindo");
             } else if (opcao == 8) {
