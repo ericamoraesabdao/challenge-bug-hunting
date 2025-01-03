@@ -34,7 +34,7 @@ public class Main {
             } else if (opcao == 6) {
                 videoManager.searchByCategory();
             } else if (opcao == 7) {
-                System.out.println("Produzindo");
+                videoManager.SortListByDate();
             } else if (opcao == 8) {
                 System.out.println("Produzindo");
             } else if (opcao == 9) {
