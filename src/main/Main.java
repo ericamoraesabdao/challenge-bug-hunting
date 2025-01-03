@@ -1,5 +1,6 @@
 package main;
 
+import Statistic.Statistics;
 import menu.Menu;
 import model.FileHandler;
 import model.VideoManager;
@@ -36,7 +37,7 @@ public class Main {
             } else if (opcao == 7) {
                 videoManager.SortListByDate();
             } else if (opcao == 8) {
-                System.out.println("Produzindo");
+                Statistics.generateStatistics();
             } else if (opcao == 9) {
                 System.out.println("Saindo do sistema...");
                 isMenuOpen = false;
