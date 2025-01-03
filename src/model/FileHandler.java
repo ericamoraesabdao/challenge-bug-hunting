@@ -40,16 +40,15 @@ public class FileHandler extends VideoServiceImpl {
         }
     }
 
-    public void listingVideos(){
+    public void listingVideos() {
         List<Video> videos = videoService.listVideos();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         int index = 0;
         for (Video video : videos) {
-            index ++;
+            index++;
             System.out.println(index + " - Título: " + video.getTitulo() + ", Descrição: " + video.getDescricao() + ", Duração: " + video.getDuracao() + ", Categoria: " + video.getCategoria() + ", Data de publicação: " + sdf.format(video.getDataPublicacao()));
         }
     }
-
 
 
     public void editVideo() {
@@ -76,7 +75,7 @@ public class FileHandler extends VideoServiceImpl {
                 "\n4 - Categoria: " + newList.getCategoria() +
                 "\n5 - Data de publicação: " + sdf.format(newList.getDataPublicacao()));
         System.out.println("Escolha o número do que você quer editar no vídeo: ");
-        int itemIndex = scanner.nextInt() -1;
+        int itemIndex = scanner.nextInt() - 1;
 
         try {
             switch (itemIndex) {
@@ -136,7 +135,30 @@ public class FileHandler extends VideoServiceImpl {
     }
 
 
-    public void deleteVideo(){
-        System.out.println("produzindo");
+    public void deleteVideo() {
+        Scanner scanner = new Scanner(System.in);
+
+        List<Video> videos = videoService.listVideos();
+
+        listingVideos();
+
+        System.out.println("Escolha o número do vídeo que deseja excluir: ");
+        int listIndex = scanner.nextInt() - 1;
+
+        if (listIndex < 0 || listIndex >= videos.size()) {
+            System.out.println("Índice inválido! Nenhum vídeo foi deletado.");
+            return;
+        }
+        try {
+            videos.remove(listIndex);
+
+            // Reescrever o arquivo com as linhas restantes
+            saveVideosToFile(videos);
+
+            System.out.println("Vídeo: " + (listIndex + 1) + " removido com sucesso.");
+        } catch (Exception e) {
+            System.out.println("Erro ao escrever no arquivo: " + e.getMessage());
+        }
+
     }
 }

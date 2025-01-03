@@ -58,15 +58,21 @@ public class Validations {
     public static Date readValidDate(Scanner scanner, String prompt) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false);
+        boolean dataInvalida = true;
 
-        while (true) {
+        Date dataDigitada = null;
+
+        while (dataInvalida) {
             System.out.print(prompt);
             String input = scanner.nextLine();
             try {
-                return sdf.parse(input);
+                dataDigitada = sdf.parse(input);
+                dataInvalida = false;
             } catch (ParseException e) {
                 System.out.println("Data inválida. Por favor, insira uma data no formato dd/MM/yyyy.");
+
             }
         }
+        return dataDigitada;
     }
 }
